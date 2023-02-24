@@ -1,26 +1,13 @@
-// http://localhost:3000/items
-
+import {data} from "../data.js"
 const productsCenter = document.querySelector(".products-center");
 const searchInput = document.querySelector("#search");
 const btns = document.querySelectorAll(".header a");
-
-let allProduct = [];
 
 const filters = {
   searchFilter: "",
 };
 
-document.addEventListener("DOMContentLoaded", () => {
-  axios
-    .get("http://localhost:3000/items")
-    .then((response) => {
-      allProduct = response.data;
-
-      // render product on DOM
-      renderProduct(response.data, filters);
-    })
-    .catch((error) => console.log(error));
-});
+document.addEventListener("DOMContentLoaded", renderProduct(data, filters));
 
 // render product on DOM
 function renderProduct(_products, _filters) {
@@ -49,7 +36,7 @@ function renderProduct(_products, _filters) {
 
 searchInput.addEventListener("input", () => {
   filters.searchFilter = searchInput.value;
-  renderProduct(allProduct, filters);
+  renderProduct(data, filters);
 });
 
 // filter based on group
@@ -58,6 +45,6 @@ btns.forEach((btn) => {
     const filter = e.target.dataset.filter;
 
     filters.searchFilter = filter;
-    renderProduct(allProduct, filters);
+    renderProduct(data, filters);
   });
 });
